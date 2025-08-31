@@ -1,0 +1,14 @@
+=== Log Analysis Result ===
+Log Level Statistics:
+INFO: 9
+ERROR: 4
+WARN: 4
+DEBUG: 3
+
+Top 3 Methods:
+1. UserService: 6
+2. OrderService: 5
+3. PaymentService: 5
+
+Hourly Distribution:
+08: 4, 09: 4, 10: 4, 11: 3, 12: 3, 13: 2

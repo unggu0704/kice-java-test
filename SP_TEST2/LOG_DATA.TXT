@@ -1,0 +1,20 @@
+[2024-12-30 08:15:22] INFO UserService User login successful: user123
+[2024-12-30 08:16:45] ERROR PaymentService Payment processing failed: insufficient funds
+[2024-12-30 08:17:10] WARN OrderService Order validation warning: missing phone number
+[2024-12-30 08:18:33] DEBUG UserService User session created: session_456
+[2024-12-30 09:22:15] INFO OrderService Order created successfully: order_789
+[2024-12-30 09:23:44] ERROR UserService Authentication failed: invalid password
+[2024-12-30 09:25:11] INFO PaymentService Payment completed: amount 150.00
+[2024-12-30 09:26:55] WARN InventoryService Low stock warning: product_abc
+[2024-12-30 10:30:12] DEBUG OrderService Order status updated: processing
+[2024-12-30 10:31:20] INFO UserService User profile updated: user123
+[2024-12-30 10:32:45] ERROR InventoryService Product not found: product_xyz
+[2024-12-30 10:33:18] INFO PaymentService Refund processed: refund_id_001
+[2024-12-30 11:45:30] WARN UserService Password reset requested: user456
+[2024-12-30 11:46:55] DEBUG PaymentService Transaction log created: tx_789
+[2024-12-30 11:48:12] INFO OrderService Order shipped: tracking_123
+[2024-12-30 12:15:40] ERROR OrderService Order cancellation failed: order already shipped
+[2024-12-30 12:16:22] INFO InventoryService Stock replenished: product_abc quantity 100
+[2024-12-30 12:17:15] WARN PaymentService Credit card expiring soon: card ending 1234
+[2024-12-30 13:20:33] DEBUG UserService Cache refresh completed: user data
+[2024-12-30 13:21:45] INFO OrderService Delivery confirmed: order_789

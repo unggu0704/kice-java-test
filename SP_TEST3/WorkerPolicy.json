@@ -1,0 +1,14 @@
+{
+  "workers": [
+    {
+      "id": "LogWorker1",
+      "thread_count": 2,
+      "processing_ratio": 40
+    },
+    {
+      "id": "LogWorker2", 
+      "thread_count": 3,
+      "processing_ratio": 60
+    }
+  ]
+}
