@@ -1,0 +1,126 @@
+# KICE 2025 시험 프로젝트 .gitignore
+
+# ========================================
+# Java 컴파일 결과물
+# ========================================
+*.class
+*.jar (except in lib folder - see below)
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# ========================================
+# 라이브러리 파일들 (용량이 큰 JAR 파일들)
+# ========================================
+SP_TEST3/lib/*.jar
+lib/*.jar
+libs/*.jar
+
+# 단, 다운로드 가이드 파일은 포함
+!**/lib/DOWNLOAD_LIBRARIES.md
+!**/lib/README.md
+
+# ========================================
+# KICE 시험 결과 파일들
+# ========================================
+RESULT_*.json
+RESULT_*.txt
+OUTPUT_*.txt
+TEST_RESULT_*.log
+
+# ========================================
+# IDE 설정 파일들
+# ========================================
+# Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.classpath
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# ========================================
+# macOS 시스템 파일들
+# ========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ========================================
+# 임시 및 로그 파일들
+# ========================================
+*.log
+*.tmp
+*.temp
+*.pid
+*.seed
+*.coverage
+*.nyc_output
+
+# ========================================
+# 개인 설정 및 환경 파일들
+# ========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ========================================
+# 압축 파일들
+# ========================================
+*.zip
+*.tar.gz
+*.rar
+
+# ========================================
+# KICE 시험 개인 메모 파일들
+# ========================================
+NOTES.md
+notes.txt
+TODO.md
+MEMO_*.txt
+
+# ========================================
+# 테스트 중 생성되는 임시 파일들
+# ========================================
+test_output/
+temp/
+cache/
+
+# ========================================
+# Git 관련 임시 파일들
+# ========================================
+*.orig
+*.rej
