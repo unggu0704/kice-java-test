@@ -1,0 +1,19 @@
+{
+  "servers": [
+    {
+      "id": "AnalysisServer1",
+      "url": "http://localhost:9001/process",
+      "active": true
+    },
+    {
+      "id": "AnalysisServer2",
+      "url": "http://localhost:9002/process",
+      "active": true
+    },
+    {
+      "id": "AnalysisServer3",
+      "url": "http://localhost:9003/process",
+      "active": false
+    }
+  ]
+}

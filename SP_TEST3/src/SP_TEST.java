@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
@@ -10,81 +12,191 @@ import org.eclipse.jetty.http.HttpHeader;
 import com.google.gson.*;
 
 public class SP_TEST {
-    
+
+    // 서버 정보 클래스
     static class ServerInfo {
         String id;
         String url;
-        int weight;
+        boolean active;
     }
-    
-    static class ServerPool {
+
+    // 로드밸런서 설정 클래스
+    static class LoadBalancerConfig {
         List<ServerInfo> servers;
     }
-    
-    static class CircuitBreaker {
-        private int failureCount = 0;
-        private final int threshold = 3;
-        private final long timeout = 5000;
-        private long lastFailureTime = 0;
-        private boolean isOpen = false;
-        
-        public boolean canExecute() {
-            if (!isOpen) return true;
-            return (System.currentTimeMillis() - lastFailureTime) > timeout;
+
+    // HTTP 요청 클래스
+    static class AnalysisRequest {
+        String request_id;
+        String log_file;
+        int worker_count;
+    }
+
+    // HTTP 응답 클래스
+    static class AnalysisResponse {
+        String request_id;
+        String status;
+        AnalysisResult analysis_result;
+        long processing_time_ms;
+    }
+
+    // 분석 결과 클래스
+    static class AnalysisResult {
+        Map<String, Integer> log_levels;
+        List<String> top_methods;
+        Map<String, Integer> hourly_distribution;
+    }
+
+    // Round-Robin 로드밸런서
+    static class LoadBalancer {
+        private List<ServerInfo> activeServers = new ArrayList<>();
+        private int currentIndex = 0;
+
+        public void loadServers(String configPath) throws IOException {
+            // TODO: LoadBalancer.json 파일을 읽어서 active=true인 서버만 activeServers에 추가
+            // 힌트: Gson을 사용하여 JSON 파일을 LoadBalancerConfig 객체로 변환
+
         }
-        
-        public void onSuccess() {
-            failureCount = 0;
-            isOpen = false;
+
+        public ServerInfo getNextServer() {
+            // TODO: Round-Robin 방식으로 다음 서버를 반환
+            // 힌트: currentIndex를 사용하여 순차적으로 서버 선택 후 인덱스 증가
+
+            return null;
         }
-        
-        public void onFailure() {
-            failureCount++;
-            if (failureCount >= threshold) {
-                isOpen = true;
-                lastFailureTime = System.currentTimeMillis();
+    }
+
+    public static void main(String[] args) throws Exception {
+        // TODO: Jetty HTTP 서버를 8080 포트에서 시작
+        // 힌트:
+        // 1. Server 객체 생성
+        // 2. ServletHandler 생성 및 AnalysisServlet을 "/analyze" 경로에 매핑
+        // 3. 서버 시작
+
+        System.out.println("🚀 HTTP Log Analysis Server starting on port 8080...");
+
+        System.out.println("✅ Server is running! Ready for analysis requests.");
+
+    }
+
+    public static class AnalysisServlet extends HttpServlet {
+        private static LoadBalancer loadBalancer = new LoadBalancer();
+        private static final String LOG_PATTERN =
+                "\\[\\d{4}-\\d{2}-\\d{2} (\\d{2}):\\d{2}:\\d{2}\\] ([A-Z]+) (\\w+).*";
+
+        static {
+            try {
+                loadBalancer.loadServers("LoadBalancer.json");
+            } catch (IOException e) {
+                System.err.println("❌ Failed to load LoadBalancer.json: " + e.getMessage());
             }
         }
-    }
-    
-    public static void main(String[] args) throws Exception {
-        Server server = new Server(8080);
-        ServletHandler handler = new ServletHandler();
-        handler.addServletWithMapping(AnalysisServlet.class, "/analyze");
-        server.setHandler(handler);
-        
-        System.out.println("🚀 KICE Analysis Server starting on port 8080...");
-        server.start();
-        System.out.println("✅ Server is running! Ready for analysis requests.");
-        server.join();
-    }
-    
-    public static class AnalysisServlet extends HttpServlet {
-        private static final Map<String, CircuitBreaker> circuitBreakers = new HashMap<>();
-        private static int currentServerIndex = 0;
-        
+
         @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
-            throws IOException {
-            
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+                throws IOException {
+
             resp.setContentType("application/json; charset=utf-8");
-            
+            long startTime = System.currentTimeMillis();
+
             try {
                 // TODO: 1. JSON 요청 파싱
-                // TODO: 2. ServerPool.json 로드  
-                // TODO: 3. Round-Robin 로드밸런싱
-                // TODO: 4. Circuit Breaker 패턴 적용
-                // TODO: 5. 내부 서버로 HTTP 요청
-                // TODO: 6. 결과 통합 후 JSON 응답
-                
+                // 힌트: Gson을 사용하여 req.getInputStream()을 AnalysisRequest 객체로 변환
 
-                
+
+                System.out.println("📥 Received analysis request: " + "[request_id]");
+
+                // TODO: 2. 로그 파일 읽기
+                // 힌트: request.log_file 경로의 파일을 읽어서 문자열로 변환
+
+
+                // TODO: 3. 로드밸런서에서 다음 서버 선택
+                // 힌트: loadBalancer.getNextServer() 호출
+
+
+                // TODO: 4. 로그 분석 수행 (1, 2번 문제에서 구현한 로직 활용)
+                // 힌트: performAnalysis(logData) 메서드 구현
+
+
+                // TODO: 5. HTTP 응답 객체 생성
+                // 힌트: AnalysisResponse 객체 생성 후 필드 설정
+
+
+                // TODO: 6. JSON으로 응답
+                // 힌트: Gson을 사용하여 응답 객체를 JSON 문자열로 변환 후 resp.getWriter().write() 호출
+
+
+                System.out.println("✅ Analysis completed for: [request_id]");
+
             } catch (Exception e) {
+                System.err.println("❌ Analysis failed: " + e.getMessage());
+
                 resp.setStatus(500);
                 JsonObject error = new JsonObject();
                 error.addProperty("status", "error");
                 error.addProperty("message", e.getMessage());
                 resp.getWriter().write(new Gson().toJson(error));
+            }
+        }
+
+        // TODO: 로그 파일 읽기 메서드 구현
+        private String readLogFile(String filePath) throws IOException {
+            // 힌트: BufferedReader를 사용하여 파일을 한 줄씩 읽어서 StringBuilder에 추가
+
+            return null;
+        }
+
+        // TODO: 로그 분석 수행 메서드 구현
+        private AnalysisResult performAnalysis(String logData) {
+            // 힌트:
+            // 1. 정규표현식을 사용하여 각 라인에서 시간, 레벨, 메서드 추출
+            // 2. Map을 사용하여 통계 집계
+            // 3. AnalysisResult 객체에 결과 설정
+
+            AnalysisResult result = new AnalysisResult();
+            result.log_levels = new HashMap<>();
+            result.top_methods = new ArrayList<>();
+            result.hourly_distribution = new HashMap<>();
+
+            Pattern pattern = Pattern.compile(LOG_PATTERN);
+
+            // TODO: 로그 데이터를 줄별로 분할하여 처리
+
+            // TODO: 각 줄에 대해 정규표현식 매칭 수행
+
+            // TODO: 통계 데이터 집계 (log_levels, methods, hours)
+
+            // TODO: TOP 3 메서드 계산하여 result.top_methods에 추가
+
+            return result;
+        }
+
+        // 선택사항: 실제 내부 서버 호출 (고급 구현)
+        private String callInternalServer(ServerInfo server, String logData) {
+            HttpClient client = new HttpClient();
+            try {
+                client.start();
+
+                // TODO: 내부 서버로 HTTP POST 요청 전송
+                // 힌트:
+                // 1. JSON 요청 데이터 생성 {"log_data": logData, "analysis_type": "full"}
+                // 2. HttpClient를 사용하여 server.url로 POST 요청
+                // 3. 응답 문자열 반환
+
+                return "{}"; // 임시 반환값
+
+            } catch (Exception e) {
+                System.err.println("❌ Failed to call internal server: " + e.getMessage());
+
+                // TODO: 다음 서버로 자동 전환 (선택사항)
+
+                throw new RuntimeException("Server call failed");
+            } finally {
+                try {
+                    client.stop();
+                } catch (Exception e) {
+                    // ignore
+                }
             }
         }
     }
